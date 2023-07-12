@@ -1,0 +1,1 @@
+[26-Oct-2022 04:49:17 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/egdtdt0h2rzb/public_html/includes/database.php on line 18
