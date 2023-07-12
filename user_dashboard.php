@@ -55,12 +55,16 @@ $addresses = get_addresses();
                             <h6>Pricing</h6>
                             <select class="form-control" name="selected_pricing" id="selected_pricing">
                                 <option selected disabled>PRICING</option>
+                                <option value="RETAIL">RETAIL</option>
+                                <option value="MARKET">MARKET</option>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <h6>DELIVERY TYPE</h6>
                             <select class="form-control" name="delivery_type" id="delivery_type">
                                 <option selected disabled>D.TYPE</option>
+                                <option value="WALK-IN">WALK-IN</option>
+                                <option value="DELIVERY">DELIVERY</option>
                             </select>
                         </div>
                     </div>
@@ -261,12 +265,12 @@ checkout.addEventListener('click', async function () {
     transactionDetails.append("route", route_value);
     transactionDetails.append("address", address_value);
     transactionDetails.append("location", location);
-    transactionDetails.append("selected_pricing", )
+    transactionDetails.append("selected_pricing", selected_pricing_value)
     transactionDetails.append("grand_total", grandtotal_value);
     transactionDetails.append("delivery_type", delivery_type_value);
-    transactionDetails.append("subtotal", subtotal);
-    transactionDetails.append("addons", addons);
-    transactionDetails.append("less", less);
+    transactionDetails.append("subtotal", subtotal_value);
+    transactionDetails.append("addons", addons_value);
+    transactionDetails.append("less", less_value);
 
     fetch('transaction.php', {
         method: 'POST',
@@ -286,14 +290,14 @@ checkout.addEventListener('click', async function () {
     let i = 0;
     while (tbody.firstChild && data.length > -1) {
         const id = data[i]?.product_id;
-        let price = disc_val < 0 ? data[i]?.finalPrice : data[i]?.finalPrice * disc_val;
+        const price = Number(data[i]?.price)
         i++;
         setTimeout(function() {
             const body = new URLSearchParams();
             body.append('product_id', id);
             body.append('price', price.toFixed(2));
             body.append('qty', 1);
-            body.append('transaction_item_id', uuid)
+            body.append('transaction_item_id', uuid);
             fetch('checkout.php', {
                 method: 'POST',
                 headers: {

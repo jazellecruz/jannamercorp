@@ -18,7 +18,7 @@ include "includes/load.php";
  */
 if (isset($_POST['transaction_table_id'])) {
     var_dump($_POST);
-    locale_set_default("Asia/Manila");
+    date_default_timezone_set("Asia/Manila");
     $date = date("Y-m-d");
 
     $transaction_table_id = remove_junk($db->escape($_POST['transaction_table_id']));
